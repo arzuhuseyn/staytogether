@@ -16,6 +16,11 @@
     <div class="container pb-5">
         <h1 class="text-center pb-5">Together we stand, divided we fall.<br>
             Stay together, stay at your home.</h1>
+        
+        <p class="lead pb-3 text-center" >
+            <span class="font-weight-bold" id="recoverpercentage"></span> percentage of total cases are recovered.
+        </p>
+
         <div id="head-row" class="row">
             <div class="col-lg-6 lg-pb-0 pb-3">
                 <div class="circle bg-red">
@@ -28,7 +33,7 @@
             <div class="col-lg-6 lg-pb-0 pb-3">
                 <div class="circle">
                     <div>
-                        <h1 id="total" class="text-white"></h1>
+                        <h1 id="total" class="text-white text-center"></h1>
                         <p class="text-white text-center lead">are recovered</p>
                     </div>
                 </div>
@@ -86,14 +91,20 @@
                 totalCase = 0
                 for (const c of sortedData) {
                         totalRecovered += parseInt(c.recovered);
-                        totalCase += parseInt(c.cases);
+                        totalCase += parseInt(c.cases); 
                 }
+                recoverPercentage = totalRecovered*100/totalCase
+                recoverPercentage = recoverPercentage.toString();
+                recoverPercentage = recoverPercentage.substring(0,4);
 
                 var textTotal = document.createTextNode(totalRecovered)
                 document.getElementById("total").appendChild(textTotal)
 
                 var textTotalCase = document.createTextNode(totalCase);
                 document.getElementById("totalcase").append(textTotalCase);
+
+                var textRecoverPercentage = document.createTextNode(recoverPercentage)
+                document.getElementById("recoverpercentage").append(textRecoverPercentage)
 
                 for (const c of sortedData) {
                     if (c.recovered) {
