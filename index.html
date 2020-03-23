@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19. Together we stand, divided we fall</title>
+    <meta name="description" content="#Covid-19 recovered people data">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="pt-5 pb-5">
+
+    <div class="container pb-5">
+        <h1 class="text-center pb-5">Together we stand, divided we fall.<br>
+            Stay together, stay at your home.</h1>
+        <div id="head-row" class="row">
+            <div class="col-lg-6 lg-pb-0 pb-3">
+                <div class="circle bg-red">
+                    <div>
+                        <h1 id="totalcase" class="text-white"></h1>
+                        <p class="text-white text-center lead">total case</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 lg-pb-0 pb-3">
+                <div class="circle">
+                    <div>
+                        <h1 id="total" class="text-white"></h1>
+                        <p class="text-white text-center lead">are recovered</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div id='myList' class="container">
+        <h2 class="pb-5 text-center font-weight-bold">The table focuses on the recovered people's data.</h2>
+        <div class="row">
+            <div class="col-lg-2 col-3">
+                <p class="lead font-weight-bold">Countries</p>
+            </div>
+            <div class="col-lg-2 col-3">
+                <p class="lead font-weight-bold">Total Cases</p>
+            </div>
+            <div class="col-lg-2 col-3">
+                <p class="lead font-weight-bold">Total Recovered</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="pt-5">
+        <div class="container">
+            <strong>
+                <a class="text-decoration-none text-center text-dark d-block m-auto" target=”_blank” href="https://twitter.com/arzuhuseyn">By: twitter/@arzuhuseyn</a>
+            </strong>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <script>
+        fetch('https://corona.lmao.ninja/countries')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+
+               var sortedData = data.sort(function (a, b) {
+                    return b.recovered - a.recovered;
+                });
+
+                totalRecovered = 0
+                totalCase = 0
+                for (const c of sortedData) {
+                        totalRecovered += parseInt(c.recovered);
+                        totalCase += parseInt(c.cases);
+                }
+
+                var textTotal = document.createTextNode(totalRecovered)
+                document.getElementById("total").appendChild(textTotal)
+
+                var textTotalCase = document.createTextNode(totalCase);
+                document.getElementById("totalcase").append(textTotalCase);
+
+                for (const c of sortedData) {
+                    if (c.recovered) {
+                        var node = document.createElement("div");
+                        node.className = "row";
+
+                        var country = document.createElement("div");
+                        country.className = "col-lg-2 col-3";
+
+                        var recovered = document.createElement("div");
+                        recovered.className = "col-lg-2 col-3";
+
+                        var totalcases = document.createElement("div");
+                        totalcases.className = "col-lg-2 col-3";
+
+                        var textcountry = document.createTextNode(c.country);
+                        country.appendChild(textcountry);
+
+                        if(c.recovered == 1) { p = ' person' } else { p = ' people'}
+
+                        var textrecovered = document.createTextNode(c.recovered + p);
+                        recovered.appendChild(textrecovered);
+
+                        if(c.cases == 1) { d = ' person' } else { d = ' people'};
+
+                        var texttotalcases = document.createTextNode(c.cases + d);
+                        totalcases.appendChild(texttotalcases);
+
+                        node.appendChild(country);
+                        node.appendChild(totalcases);
+                        node.appendChild(recovered);
+                        
+
+                        document.getElementById("myList").appendChild(node)
+
+                    }
+                }
+            });
+    </script>
+</body>
+
+</html>

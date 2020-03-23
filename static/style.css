@@ -1,0 +1,34 @@
+body {
+    background: #f1f2f6;
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 20rem;
+    height: 20rem;
+    background: #00b894;
+    border-radius: 50%;
+}
+
+.bg-red {
+    background: #c0392b !important;
+}
+
+.row {
+    justify-content: center !important;
+}
+
+#head-row {
+    border-bottom: none !important;
+}
+
+.col-lg-2, .col-3 {
+    border-bottom: 1px solid;
+    min-height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
